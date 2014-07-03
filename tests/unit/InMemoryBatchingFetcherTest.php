@@ -2,21 +2,21 @@
 
 namespace Tests\BatchingIterator;
 
-use BatchingIterator\InMemoryEntitiesFetcher;
+use BatchingIterator\InMemoryBatchingFetcher;
 
 /**
- * @covers BatchingIterator\InMemoryEntitiesFetcher
+ * @covers BatchingIterator\InMemoryBatchingFetcher
  *
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
-class InMemoryEntitiesFetcherTest extends \PHPUnit_Framework_TestCase {
+class InMemoryBatchingFetcherTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @dataProvider fetchCountProvider
 	 */
 	public function testGivenNoValues_fetchNextReturnEmptyArray( $fetchCount ) {
-		$fetcher = new InMemoryEntitiesFetcher( array() );
+		$fetcher = new InMemoryBatchingFetcher( array() );
 
 		$this->assertSame(
 			array(),
@@ -35,20 +35,20 @@ class InMemoryEntitiesFetcherTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testGivenOneValue_onlyFirstFetchReturnsIt() {
-		$fetcher = new InMemoryEntitiesFetcher( array( 'foo' ) );
+		$fetcher = new InMemoryBatchingFetcher( array( 'foo' ) );
 
 		$this->assertSame( array( 'foo' ), $fetcher->fetchNext( 1 ) );
 		$this->assertSame( array(), $fetcher->fetchNext( 1 ) );
 	}
 
 	public function testGivenOneValue_fetchingTwoReturnsOnlyOne() {
-		$fetcher = new InMemoryEntitiesFetcher( array( 'foo' ) );
+		$fetcher = new InMemoryBatchingFetcher( array( 'foo' ) );
 
 		$this->assertSame( array( 'foo' ), $fetcher->fetchNext( 2 ) );
 	}
 
 	public function testSuccessiveFetchesGivenMultipleValues() {
-		$fetcher = new InMemoryEntitiesFetcher( array( 'foo', 'bar', 'baz', 'bah' ) );
+		$fetcher = new InMemoryBatchingFetcher( array( 'foo', 'bar', 'baz', 'bah' ) );
 
 		$this->assertSame( array( 'foo' ), $fetcher->fetchNext( 1 ) );
 		$this->assertSame( array( 'bar', 'baz' ), $fetcher->fetchNext( 2 ) );

@@ -3,7 +3,7 @@
 namespace Tests\BatchingIterator;
 
 use BatchingIterator\BatchingIterator;
-use BatchingIterator\InMemoryEntitiesFetcher;
+use BatchingIterator\InMemoryBatchingFetcher;
 
 /**
  * @covers BatchingIterator\BatchingIterator
@@ -31,7 +31,7 @@ class BatchingIteratorTest extends \PHPUnit_Framework_TestCase {
 	public function testAllValuesEndUpInTheIterator( $batchSize ) {
 		$values = array( 'foo', 'bar', 'baz', 'bah' );
 
-		$fetcher = new InMemoryEntitiesFetcher( $values );
+		$fetcher = new InMemoryBatchingFetcher( $values );
 		$iterator = new BatchingIterator( $fetcher );
 		$iterator->setMaxBatchSize( $batchSize );
 

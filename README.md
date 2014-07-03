@@ -25,3 +25,14 @@ BatchingIterator 1.0:
     }
 }
 ```
+
+## Release notes
+
+
+#### Version 1.0 (2014-07-03)
+
+Initial release with
+
+* `BatchingIterator` class
+* `BatchingFetcher` interface
+* `InMemoryBatchingFetcher` trivial implementation of `BatchingFetcher`

@@ -11,7 +11,7 @@ namespace BatchingIterator;
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
-class InMemoryEntitiesFetcher implements BatchingFetcher {
+class InMemoryBatchingFetcher implements BatchingFetcher {
 
 	private $values;
 
