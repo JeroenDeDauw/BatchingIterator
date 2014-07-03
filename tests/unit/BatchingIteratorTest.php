@@ -72,4 +72,25 @@ class BatchingIteratorTest extends \PHPUnit_Framework_TestCase {
 		$this->assertSame( array( 'foo', 'bar', 'baz' ), iterator_to_array( $iterator ) );
 	}
 
+	/**
+	 * @dataProvider invalidBatchSizeProvider
+	 */
+	public function testSettingInvalidMaxBatchSizeCausesException( $invalidBatchSize ) {
+		$iterator = new BatchingIterator( $this->getMock( 'BatchingIterator\BatchingFetcher' ) );
+
+		$this->setExpectedException( 'InvalidArgumentException' );
+		$iterator->setMaxBatchSize( $invalidBatchSize );
+	}
+
+	public function invalidBatchSizeProvider() {
+		return array(
+			array( 0 ),
+			array( -5 ),
+			array( 4.2 ),
+			array( '1' ),
+			array( null ),
+			array( array() ),
+		);
+	}
+
 }
