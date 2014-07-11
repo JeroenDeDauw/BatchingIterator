@@ -12,7 +12,7 @@ Iterator that batches requests for additional values. This is useful as a founda
 
 Create a service that uses an Iterator.
 
-```
+```php
 class TweetImporter {
 
     public function importTweets( Iterator $tweets ) {
