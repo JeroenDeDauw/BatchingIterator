@@ -10,7 +10,7 @@ Iterator that batches requests for additional values. This is useful as a founda
 
 ## Usage
 
-Create a service that uses an Iterator.
+Create a service that uses an `Iterator`.
 
 ```php
 class TweetImporter {
