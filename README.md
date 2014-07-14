@@ -24,7 +24,7 @@ class TweetImporter {
 }
 ```
 
-Note how this service only depends on Iterator. It is not aware of how the Iterator provides its results. You thus decoupled the service from who retrieves the results, and from when this happens. They could be comming from values already in memory, wrapped in an ArrayIterator, or be pulled from a web service as iteration happens.
+Note how this service only depends on Iterator. It is not aware of how the Iterator provides its results. You thus decoupled the service from who retrieves the results, and from when this happens. They could be comming from values already in memory, wrapped in an `ArrayIterator`, or be pulled from a web service as iteration happens. Using an `ArrayIterator` is very helpful for testing.
 
 Implement the `BarchingFetcher` interface. If you already have a service to retrieve the data, this can be a simple wrapper.
 
