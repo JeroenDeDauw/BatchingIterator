@@ -3,7 +3,7 @@
 namespace Tests\BatchingIterator;
 
 use BatchingIterator\BatchingIterator;
-use BatchingIterator\InMemoryBatchingFetcher;
+use BatchingIterator\Fetchers\InMemoryBatchingFetcher;
 
 /**
  * @covers BatchingIterator\BatchingIterator

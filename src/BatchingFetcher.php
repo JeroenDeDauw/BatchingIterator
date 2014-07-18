@@ -22,6 +22,8 @@ interface BatchingFetcher {
 
 	/**
 	 * Rewind the BatchingFetcher to the first element.
+	 *
+	 * @since 2.0
 	 */
 	public function rewind();
 

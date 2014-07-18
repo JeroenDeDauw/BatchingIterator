@@ -1,10 +1,13 @@
 <?php
 
-namespace BatchingIterator;
+namespace BatchingIterator\Fetchers;
+
+use BatchingIterator\BatchingFetcher;
 
 /**
  * Trivial implementation of BatchingFetcher that uses an in-memory array.
  * Values are returned in first in, first out fashion.
+ * (In other words: an adapter from array to BatchingFetcher)
  *
  * @since 1.0
  *
@@ -15,7 +18,7 @@ class InMemoryBatchingFetcher implements BatchingFetcher {
 
 	private $values;
 
-	public function __construct( $values ) {
+	public function __construct( array $values ) {
 		$this->values = $values;
 	}
 

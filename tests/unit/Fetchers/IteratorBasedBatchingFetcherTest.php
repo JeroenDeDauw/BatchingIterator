@@ -2,21 +2,21 @@
 
 namespace Tests\BatchingIterator;
 
-use BatchingIterator\InMemoryBatchingFetcher;
+use BatchingIterator\Fetchers\IteratorBasedBatchingFetcher;
 
 /**
- * @covers BatchingIterator\InMemoryBatchingFetcher
+ * @covers BatchingIterator\Fetchers\IteratorBasedBatchingFetcher
  *
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
-class InMemoryBatchingFetcherTest extends \PHPUnit_Framework_TestCase {
+class IteratorBasedBatchingFetcherTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @dataProvider fetchCountProvider
 	 */
 	public function testGivenNoValues_fetchNextReturnEmptyArray( $fetchCount ) {
-		$fetcher = new InMemoryBatchingFetcher( array() );
+		$fetcher = new IteratorBasedBatchingFetcher( new \ArrayIterator() );
 
 		$this->assertSame(
 			array(),
@@ -35,20 +35,20 @@ class InMemoryBatchingFetcherTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testGivenOneValue_onlyFirstFetchReturnsIt() {
-		$fetcher = new InMemoryBatchingFetcher( array( 'foo' ) );
+		$fetcher = new IteratorBasedBatchingFetcher( new \ArrayIterator( array( 'foo' ) ) );
 
 		$this->assertSame( array( 'foo' ), $fetcher->fetchNext( 1 ) );
 		$this->assertSame( array(), $fetcher->fetchNext( 1 ) );
 	}
 
 	public function testGivenOneValue_fetchingTwoReturnsOnlyOne() {
-		$fetcher = new InMemoryBatchingFetcher( array( 'foo' ) );
+		$fetcher = new IteratorBasedBatchingFetcher( new \ArrayIterator( array( 'foo' ) ) );
 
 		$this->assertSame( array( 'foo' ), $fetcher->fetchNext( 2 ) );
 	}
 
 	public function testSuccessiveFetchesGivenMultipleValues() {
-		$fetcher = new InMemoryBatchingFetcher( array( 'foo', 'bar', 'baz', 'bah' ) );
+		$fetcher = new IteratorBasedBatchingFetcher( new \ArrayIterator( array( 'foo', 'bar', 'baz', 'bah' ) ) );
 
 		$this->assertSame( array( 'foo' ), $fetcher->fetchNext( 1 ) );
 		$this->assertSame( array( 'bar', 'baz' ), $fetcher->fetchNext( 2 ) );
@@ -57,7 +57,7 @@ class InMemoryBatchingFetcherTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testWhenResultsHaveRunOut_rewindGoesToFirstElement() {
-		$fetcher = new InMemoryBatchingFetcher( array( 'foo', 'bar', 'baz', 'bah' ) );
+		$fetcher = new IteratorBasedBatchingFetcher( new \ArrayIterator( array( 'foo', 'bar', 'baz', 'bah' ) ) );
 
 		$fetcher->fetchNext( 10 );
 		$fetcher->rewind();
@@ -66,7 +66,7 @@ class InMemoryBatchingFetcherTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testWhenSomeFetchingHasHappened_rewindGoesToFirstElement() {
-		$fetcher = new InMemoryBatchingFetcher( array( 'foo', 'bar', 'baz', 'bah' ) );
+		$fetcher = new IteratorBasedBatchingFetcher( new \ArrayIterator( array( 'foo', 'bar', 'baz', 'bah' ) ) );
 
 		$fetcher->fetchNext( 2 );
 		$fetcher->rewind();
@@ -75,7 +75,7 @@ class InMemoryBatchingFetcherTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testWhenNoFetchingHasHappened_rewindStaysAtTheFirstElement() {
-		$fetcher = new InMemoryBatchingFetcher( array( 'foo', 'bar', 'baz', 'bah' ) );
+		$fetcher = new IteratorBasedBatchingFetcher( new \ArrayIterator( array( 'foo', 'bar', 'baz', 'bah' ) ) );
 
 		$fetcher->rewind();
 

@@ -80,7 +80,16 @@ BatchingIterator 1.0:
 
 #### Version 2.0 (dev)
 
-* The `BatchingFetcher` now has a `rewind` method
+Breaking changes:
+
+* Added `rewind` method to the `BatchingFetcher` interface
+* Renamed `BatchingIterator\InMemoryBatchingFetcher` to `BatchingIterator\Fetchers\InMemoryBatchingFetcher`
+
+New features and enhancements:
+
+* `BatchingIterator` can now be iterated over multiple times
+* Added `MultipleBatchingFetcher`
+* Added `IteratorBasedBatchingFetcher`
 
 #### Version 1.0 (2014-07-03)
 
