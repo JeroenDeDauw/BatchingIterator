@@ -6,7 +6,8 @@
 [![Latest Stable Version](https://poser.pugx.org/jeroen-de-dauw/batching-iterator/version.png)](https://packagist.org/packages/jeroen-de-dauw/batching-iterator)
 [![Download count](https://poser.pugx.org/jeroen-de-dauw/batching-iterator/d/total.png)](https://packagist.org/packages/jeroen-de-dauw/batching-iterator)
 
-Iterator that batches requests for additional values. This is useful as a foundation for iterators over data that is in an expensive to access location, such as a database or a web API.
+Iterator that batches requests for additional values. This is useful as a foundation for iterators
+over data that is in an expensive to access location, such as a database or a web API.
 
 ## Usage
 
@@ -24,9 +25,13 @@ class TweetImporter {
 }
 ```
 
-Note how this service only depends on Iterator. It is not aware of how the Iterator provides its results. You thus decoupled the service from who retrieves the results, and from when this happens. They could be comming from values already in memory, wrapped in an `ArrayIterator`, or be pulled from a web service as iteration happens. Using an `ArrayIterator` is very helpful for testing.
+Note how this service only depends on Iterator. It is not aware of how the Iterator provides its
+results. You thus decoupled the service from who retrieves the results, and from when this happens.
+They could be coming from values already in memory, wrapped in an `ArrayIterator`, or be pulled from
+a web service as iteration happens. Using an `ArrayIterator` is very helpful for testing.
 
-Implement the `BarchingFetcher` interface. If you already have a service to retrieve the data, this can be a simple wrapper.
+Implement the `BarchingFetcher` interface. If you already have a service to retrieve the data, this
+can be a simple wrapper.
 
 ```php
 class BatchingTweetFetcher implements BatchingFetcher {
@@ -43,7 +48,8 @@ class BatchingTweetFetcher implements BatchingFetcher {
 }
 ```
 
-Now you can easily instantiate the service, have the batching optimization, and have all responsibilities nicely decoupled.
+Now you can easily instantiate the service, have the batching optimization, and have all
+responsibilities nicely decoupled.
 
 ```php
 class TweetImportCli {
@@ -57,6 +63,19 @@ class TweetImportCli {
 
 }
 ```
+
+## Class overview
+
+Core interface:
+
+* `BatchingIterator` - iterator that batches requests via a `BatchingFetcher`
+* `BatchingFetcher` - interface with `fetchNext` method. You will likely need to create an implementation
+
+Utilities:
+
+* `MultipleBatchingFetcher` - combines a number of `BatchingFetcher` instances into one
+* `InMemoryBatchingFetcher` - adapts an `array` to the `BatchingFetcher` interface
+* `InMemoryBatchingFetcher` - adapts an `Iterator` to the `BatchingFetcher` interface
 
 ## Installation
 
