@@ -6,8 +6,22 @@
 [![Latest Stable Version](https://poser.pugx.org/jeroen-de-dauw/batching-iterator/version.png)](https://packagist.org/packages/jeroen-de-dauw/batching-iterator)
 [![Download count](https://poser.pugx.org/jeroen-de-dauw/batching-iterator/d/total.png)](https://packagist.org/packages/jeroen-de-dauw/batching-iterator)
 
-Iterator that batches requests for additional values. This is useful as a foundation for iterators
-over data that is in an expensive to access location, such as a database or a web API.
+Small library provinding an `Iterator` that batches requests for additional values.
+This is useful as a foundation for iterators over data that is in an expensive to
+access location, such as a database or a web API.
+
+## Class overview
+
+Core interface:
+
+* `BatchingIterator` - iterator that batches requests via a `BatchingFetcher`
+* `BatchingFetcher` - interface with `fetchNext` method. You will likely need to create an implementation
+
+Utilities:
+
+* `MultipleBatchingFetcher` - combines a number of `BatchingFetcher` instances into one
+* `InMemoryBatchingFetcher` - adapts an `array` to the `BatchingFetcher` interface
+* `InMemoryBatchingFetcher` - adapts an `Iterator` to the `BatchingFetcher` interface
 
 ## Usage
 
@@ -63,19 +77,6 @@ class TweetImportCli {
 
 }
 ```
-
-## Class overview
-
-Core interface:
-
-* `BatchingIterator` - iterator that batches requests via a `BatchingFetcher`
-* `BatchingFetcher` - interface with `fetchNext` method. You will likely need to create an implementation
-
-Utilities:
-
-* `MultipleBatchingFetcher` - combines a number of `BatchingFetcher` instances into one
-* `InMemoryBatchingFetcher` - adapts an `array` to the `BatchingFetcher` interface
-* `InMemoryBatchingFetcher` - adapts an `Iterator` to the `BatchingFetcher` interface
 
 ## Installation
 
