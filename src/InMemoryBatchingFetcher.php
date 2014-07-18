@@ -20,7 +20,7 @@ class InMemoryBatchingFetcher implements BatchingFetcher {
 	}
 
 	/**
-	 * @see EntitiesFetcher::fetchNext
+	 * @see BatchingFetcher::fetchNext
 	 *
 	 * @param int $maxFetchCount
 	 *
@@ -29,11 +29,19 @@ class InMemoryBatchingFetcher implements BatchingFetcher {
 	public function fetchNext( $maxFetchCount ) {
 		$values = array();
 
-		while ( !empty( $this->values ) && --$maxFetchCount >= 0 ) {
-			$values[] = array_shift( $this->values );
+		while ( !is_null( key( $this->values ) ) && --$maxFetchCount >= 0 ) {
+			$values[] = current( $this->values );
+			next( $this->values );
 		}
 
 		return $values;
+	}
+
+	/**
+	 * @see BatchingFetcher::rewind
+	 */
+	public function rewind() {
+		reset( $this->values );
 	}
 
 }

@@ -36,6 +36,10 @@ class BatchingTweetFetcher implements BatchingFetcher {
         return $tweets;
     }
 
+    public function rewind() {
+        // Go back to the first tweet
+    }
+
 }
 ```
 
@@ -74,6 +78,9 @@ BatchingIterator 1.0:
 
 ## Release notes
 
+#### Version 2.0 (dev)
+
+* The `BatchingFetcher` now has a `rewind` method
 
 #### Version 1.0 (2014-07-03)
 

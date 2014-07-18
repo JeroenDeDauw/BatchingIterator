@@ -56,4 +56,30 @@ class InMemoryBatchingFetcherTest extends \PHPUnit_Framework_TestCase {
 		$this->assertSame( array(), $fetcher->fetchNext( 2 ) );
 	}
 
+	public function testWhenResultsHaveRunOut_rewindGoesToFirstElement() {
+		$fetcher = new InMemoryBatchingFetcher( array( 'foo', 'bar', 'baz', 'bah' ) );
+
+		$fetcher->fetchNext( 10 );
+		$fetcher->rewind();
+
+		$this->assertSame( array( 'foo' ), $fetcher->fetchNext( 1 ) );
+	}
+
+	public function testWhenSomeFetchingHasHappened_rewindGoesToFirstElement() {
+		$fetcher = new InMemoryBatchingFetcher( array( 'foo', 'bar', 'baz', 'bah' ) );
+
+		$fetcher->fetchNext( 2 );
+		$fetcher->rewind();
+
+		$this->assertSame( array( 'foo' ), $fetcher->fetchNext( 1 ) );
+	}
+
+	public function testWhenNoFetchingHasHappened_rewindStaysAtTheFirstElement() {
+		$fetcher = new InMemoryBatchingFetcher( array( 'foo', 'bar', 'baz', 'bah' ) );
+
+		$fetcher->rewind();
+
+		$this->assertSame( array( 'foo' ), $fetcher->fetchNext( 1 ) );
+	}
+
 }

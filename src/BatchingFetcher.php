@@ -20,4 +20,9 @@ interface BatchingFetcher {
 	 */
 	public function fetchNext( $maxFetchCount );
 
+	/**
+	 * Rewind the BatchingFetcher to the first element.
+	 */
+	public function rewind();
+
 }

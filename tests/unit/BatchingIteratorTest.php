@@ -52,16 +52,19 @@ class BatchingIteratorTest extends \PHPUnit_Framework_TestCase {
 		$fetcher = $this->getMock( 'BatchingIterator\BatchingFetcher' );
 
 		$fetcher->expects( $this->at( 0 ) )
-			->method( 'fetchNext' )
-			->with( $this->equalTo( 2 ) )
-			->will( $this->returnValue( array( 'foo', 'bar' ) ) );
+			->method( 'rewind' );
 
 		$fetcher->expects( $this->at( 1 ) )
 			->method( 'fetchNext' )
 			->with( $this->equalTo( 2 ) )
-			->will( $this->returnValue( array( 'baz' ) ) );
+			->will( $this->returnValue( array( 'foo', 'bar' ) ) );
 
 		$fetcher->expects( $this->at( 2 ) )
+			->method( 'fetchNext' )
+			->with( $this->equalTo( 2 ) )
+			->will( $this->returnValue( array( 'baz' ) ) );
+
+		$fetcher->expects( $this->at( 3 ) )
 			->method( 'fetchNext' )
 			->with( $this->equalTo( 2 ) )
 			->will( $this->returnValue( array() ) );
@@ -91,6 +94,26 @@ class BatchingIteratorTest extends \PHPUnit_Framework_TestCase {
 			array( null ),
 			array( array() ),
 		);
+	}
+
+	public function testWhenRewindingTheIterator_theFetcherIsAlsoRewinded() {
+		$fetcher = $this->getMock( 'BatchingIterator\BatchingFetcher' );
+
+		$fetcher->expects( $this->once() )
+			->method( 'rewind' );
+
+		$iterator = new BatchingIterator( $fetcher );
+
+		$iterator->rewind();
+	}
+
+	public function testMultipleIteration() {
+		$values = array( 'foo', 'bar', 'baz' );
+
+		$iterator = new BatchingIterator( new InMemoryBatchingFetcher( $values ) );
+
+		$this->assertEquals( $values, iterator_to_array( $iterator ) );
+		$this->assertEquals( $values, iterator_to_array( $iterator ) );
 	}
 
 }

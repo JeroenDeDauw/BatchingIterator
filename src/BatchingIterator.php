@@ -110,6 +110,7 @@ class BatchingIterator implements \Iterator {
 	}
 
 	public function rewind() {
+		$this->fetcher->rewind();
 		$this->key = -1;
 		$this->next();
 	}
