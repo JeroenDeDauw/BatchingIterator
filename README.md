@@ -97,7 +97,7 @@ BatchingIterator 1.0:
 
 ## Release notes
 
-#### Version 2.0 (dev)
+#### Version 2.0 (2014-07-19)
 
 Breaking changes:
 
