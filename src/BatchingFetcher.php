@@ -16,7 +16,7 @@ interface BatchingFetcher {
 	 *
 	 * @param int $maxFetchCount
 	 *
-	 * @return mixed[]
+	 * @return array
 	 */
 	public function fetchNext( $maxFetchCount );
 
