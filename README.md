@@ -97,6 +97,10 @@ BatchingIterator 1.0:
 
 ## Release notes
 
+#### Version 2.1 (2014-07-19)
+
+* `MultipleBatchingFetcher` now accepts an array of `BatchingFetcher` in its constructor
+
 #### Version 2.0 (2014-07-19)
 
 Breaking changes:

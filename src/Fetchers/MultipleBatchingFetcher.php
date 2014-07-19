@@ -12,7 +12,7 @@ use InvalidArgumentException;
  * Recursion might be used over the fetchers. So a big amount of fetchers
  * can cause the stack to be blown.
  *
- * @since 1.0
+ * @since 2.0
  *
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
@@ -25,13 +25,26 @@ class MultipleBatchingFetcher implements BatchingFetcher {
 	private $fetchers;
 
 	/**
-	 * @param BatchingFetcher $firstFetcher
+	 * @param BatchingFetcher|BatchingFetcher[] $firstFetcher
 	 * @param BatchingFetcher ...
 	 *
 	 * @throws InvalidArgumentException
 	 */
-	public function __construct( BatchingFetcher $firstFetcher ) {
-		foreach ( func_get_args() as $fetcher ) {
+	public function __construct( $firstFetcher ) {
+		if ( is_array( $firstFetcher ) ) {
+			if ( func_num_args() !== 1 ) {
+				throw new InvalidArgumentException( 'When providing an array of BatchingFetcher, no further arguments are accepted' );
+			}
+
+			$this->attachFetchers( $firstFetcher );
+		}
+		else {
+			$this->attachFetchers( func_get_args() );
+		}
+	}
+
+	private function attachFetchers( array $fetchers ) {
+		foreach ( $fetchers as $fetcher ) {
 			if ( !( $fetcher instanceof BatchingFetcher ) ) {
 				throw new InvalidArgumentException( 'All constructor arguments should implement BatchingFetcher' );
 			}

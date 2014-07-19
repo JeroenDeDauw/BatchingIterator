@@ -9,7 +9,7 @@ use BatchingIterator\BatchingFetcher;
  * Values are returned in first in, first out fashion.
  * (In other words: an adapter from array to BatchingFetcher)
  *
- * @since 1.0
+ * @since 2.0
  *
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >

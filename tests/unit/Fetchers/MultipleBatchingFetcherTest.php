@@ -65,4 +65,38 @@ class MultipleBatchingFetcherTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals( array( 'foo' ), $fetcher->fetchNext( 1 ) );
 	}
 
+	public function testCanConstructWithArray() {
+		new MultipleBatchingFetcher( array(
+			new InMemoryBatchingFetcher( array() ),
+			new InMemoryBatchingFetcher( array() )
+		) );
+
+		$this->assertTrue( true );
+	}
+
+	public function testGivenArrayAndFetchers_constructorThrowsException() {
+		$this->setExpectedException( 'InvalidArgumentException' );
+
+		new MultipleBatchingFetcher(
+			array(
+				new InMemoryBatchingFetcher( array() ),
+				new InMemoryBatchingFetcher( array() )
+			),
+			new InMemoryBatchingFetcher( array() )
+		);
+	}
+
+	public function testGivenArrayWithNonFetcher_constructorThrowsException() {
+		$this->setExpectedException( 'InvalidArgumentException' );
+
+		new MultipleBatchingFetcher(
+			array(
+				new InMemoryBatchingFetcher( array() ),
+				new InMemoryBatchingFetcher( array() ),
+				null,
+				new InMemoryBatchingFetcher( array() )
+			)
+		);
+	}
+
 }
