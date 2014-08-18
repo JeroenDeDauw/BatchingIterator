@@ -21,7 +21,7 @@ Utilities:
 
 * `MultipleBatchingFetcher` - combines a number of `BatchingFetcher` instances into one
 * `InMemoryBatchingFetcher` - adapts an `array` to the `BatchingFetcher` interface
-* `InMemoryBatchingFetcher` - adapts an `Iterator` to the `BatchingFetcher` interface
+* `IteratorBasedBatchingFetcher` - adapts an `Iterator` to the `BatchingFetcher` interface
 
 ## Usage
 

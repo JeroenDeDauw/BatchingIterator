@@ -1,7 +1,7 @@
 {
 	"name": "jeroen-de-dauw/batching-iterator",
 	"type": "library",
-	"description": "Iterator that batches requests for more values",
+	"description": "Iterator that fetches values in batch",
 	"keywords": [
 		"Iterator",
 		"Batching"
