@@ -1,5 +1,6 @@
 {
-	"name": "jeroen-de-dauw/batching-iterator",
+	"name": "jeroen/batching-iterator",
+	"replace": { "jeroen-de-dauw/batching-iterator": "*" },
 	"type": "library",
 	"description": "Iterator that fetches values in batch",
 	"keywords": [
