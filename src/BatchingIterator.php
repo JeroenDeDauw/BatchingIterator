@@ -25,7 +25,7 @@ class BatchingIterator implements \Iterator {
 	/**
 	 * @var int
 	 */
-	private $maxBatchSize;
+	private $maxBatchSize = 10;
 
 	/**
 	 * @var mixed|null

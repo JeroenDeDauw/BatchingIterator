@@ -86,17 +86,22 @@ this package as well as its dependencies.
 To add this package as a local, per-project dependency to your project, simply add a
 dependency on `jeroen/batching-iterator` to your project's `composer.json` file.
 Here is a minimal example of a `composer.json` file that just defines a dependency on
-BatchingIterator 1.0:
+BatchingIterator 2.0:
 
 ```js
 {
     "require": {
-        "jeroen/batching-iterator": "1.0.*"
+        "jeroen/batching-iterator": "~2.0"
     }
 }
 ```
 
 ## Release notes
+
+#### Version 2.1.2 (2014-11-02)
+
+* The max batch size in `BatchingIterator` now defaults to 10, avoiding usage of the
+iterator without this value being set.
 
 #### Version 2.1.1 (2014-08-19)
 
