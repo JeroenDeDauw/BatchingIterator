@@ -1,5 +1,7 @@
 <?php
 
+declare( strict_types = 1 );
+
 namespace BatchingIterator;
 
 use InvalidArgumentException;
@@ -42,9 +44,6 @@ class BatchingIterator implements \Iterator {
 	 */
 	private $key;
 
-	/**
-	 * @param BatchingFetcher $fetcher
-	 */
 	public function __construct( BatchingFetcher $fetcher ) {
 		$this->fetcher = $fetcher;
 	}
@@ -54,8 +53,8 @@ class BatchingIterator implements \Iterator {
 	 *
 	 * @throws InvalidArgumentException
 	 */
-	public function setMaxBatchSize( $maxBatchSize ) {
-		if ( !is_int( $maxBatchSize ) || $maxBatchSize < 1 ) {
+	public function setMaxBatchSize( int $maxBatchSize ) {
+		if ( $maxBatchSize < 1 ) {
 			throw new InvalidArgumentException( '$maxBatchSize should be an int bigger than 0.' );
 		}
 
@@ -95,17 +94,11 @@ class BatchingIterator implements \Iterator {
 		}
 	}
 
-	/**
-	 * @return int
-	 */
-	public function key() {
+	public function key(): int {
 		return $this->key;
 	}
 
-	/**
-	 * @return bool
-	 */
-	public function valid() {
+	public function valid(): bool {
 		return $this->current !== null;
 	}
 

@@ -1,5 +1,7 @@
 <?php
 
+declare( strict_types = 1 );
+
 namespace BatchingIterator\Fetchers;
 
 use BatchingIterator\BatchingFetcher;
@@ -64,7 +66,7 @@ class MultipleBatchingFetcher implements BatchingFetcher {
 	 *
 	 * @return mixed[]
 	 */
-	public function fetchNext( $maxFetchCount ) {
+	public function fetchNext( int $maxFetchCount ): array {
 		if ( key( $this->fetchers ) === null ) {
 			return [];
 		}
