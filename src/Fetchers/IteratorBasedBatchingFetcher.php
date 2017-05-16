@@ -31,7 +31,7 @@ class IteratorBasedBatchingFetcher implements BatchingFetcher {
 	 *
 	 * @return mixed[]
 	 */
-	public function fetchNext( $maxFetchCount ) {
+	public function fetchNext( int $maxFetchCount ): array {
 		$values = [];
 
 		while ( !is_null( $this->iterator->key() ) && --$maxFetchCount >= 0 ) {

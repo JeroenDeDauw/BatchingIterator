@@ -86,32 +86,37 @@ this package as well as its dependencies.
 To add this package as a local, per-project dependency to your project, simply add a
 dependency on `jeroen/batching-iterator` to your project's `composer.json` file.
 Here is a minimal example of a `composer.json` file that just defines a dependency on
-BatchingIterator 2.0:
+BatchingIterator 3.x:
 
 ```json
 {
     "require": {
-        "jeroen/batching-iterator": "~2.0"
+        "jeroen/batching-iterator": "~3.0"
     }
 }
 ```
 
 ## Release notes
 
-#### Version 2.1.2 (2014-11-02)
+### Version 3.0.0 (2017-05-16)
+
+* Dropped support for PHP 5.x
+* Added scalar and return type hints
+
+### Version 2.1.2 (2014-11-02)
 
 * The max batch size in `BatchingIterator` now defaults to 10, avoiding usage of the
 iterator without this value being set.
 
-#### Version 2.1.1 (2014-08-19)
+### Version 2.1.1 (2014-08-19)
 
 * Release with package name `jeroen/batching-iterator` instead of `jeroen-de-dauw/batching-iterator`.
 
-#### Version 2.1 (2014-07-19)
+### Version 2.1 (2014-07-19)
 
 * `MultipleBatchingFetcher` now accepts an array of `BatchingFetcher` in its constructor
 
-#### Version 2.0 (2014-07-19)
+### Version 2.0 (2014-07-19)
 
 Breaking changes:
 
@@ -124,7 +129,7 @@ New features and enhancements:
 * Added `MultipleBatchingFetcher`
 * Added `IteratorBasedBatchingFetcher`
 
-#### Version 1.0 (2014-07-03)
+### Version 1.0 (2014-07-03)
 
 Initial release with
 

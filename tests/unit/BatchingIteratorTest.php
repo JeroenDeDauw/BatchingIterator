@@ -91,11 +91,8 @@ class BatchingIteratorTest extends TestCase {
 	public function invalidBatchSizeProvider() {
 		return [
 			[ 0 ],
+			[ -1 ],
 			[ -5 ],
-			[ 4.2 ],
-			[ '1' ],
-			[ null ],
-			[ [] ],
 		];
 	}
 
