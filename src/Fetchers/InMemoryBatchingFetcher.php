@@ -30,7 +30,7 @@ class InMemoryBatchingFetcher implements BatchingFetcher {
 	 * @return mixed[]
 	 */
 	public function fetchNext( $maxFetchCount ) {
-		$values = array();
+		$values = [];
 
 		while ( !is_null( key( $this->values ) ) && --$maxFetchCount >= 0 ) {
 			$values[] = current( $this->values );

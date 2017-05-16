@@ -4,6 +4,7 @@ namespace Tests\BatchingIterator;
 
 use BatchingIterator\Fetchers\InMemoryBatchingFetcher;
 use BatchingIterator\Fetchers\MultipleBatchingFetcher;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers BatchingIterator\Fetchers\MultipleBatchingFetcher
@@ -11,49 +12,49 @@ use BatchingIterator\Fetchers\MultipleBatchingFetcher;
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
-class MultipleBatchingFetcherTest extends \PHPUnit_Framework_TestCase {
+class MultipleBatchingFetcherTest extends TestCase {
 
 	public function testGivenNonFetcher_constructorThrowsException() {
-		$this->setExpectedException( 'InvalidArgumentException' );
+		$this->expectException( 'InvalidArgumentException' );
 
 		new MultipleBatchingFetcher(
-			new InMemoryBatchingFetcher( array() ),
-			new InMemoryBatchingFetcher( array() ),
+			new InMemoryBatchingFetcher( [] ),
+			new InMemoryBatchingFetcher( [] ),
 			null,
-			new InMemoryBatchingFetcher( array() )
+			new InMemoryBatchingFetcher( [] )
 		);
 	}
 
 	public function testGivenOneFetcher_behaviourIsNotAltered() {
-		$values = array( 'foo', 'bar', 'baz' );
+		$values = [ 'foo', 'bar', 'baz' ];
 
 		$fetcher = new MultipleBatchingFetcher( new InMemoryBatchingFetcher( $values ) );
 
 		$this->assertEquals( $values, $fetcher->fetchNext( 4 ) );
-		$this->assertEquals( array(), $fetcher->fetchNext( 4 ) );
+		$this->assertEquals( [], $fetcher->fetchNext( 4 ) );
 	}
 
 	public function testGivenMultipleFetchers_allValuesCanBeFetched() {
 		$fetcher = new MultipleBatchingFetcher(
-			new InMemoryBatchingFetcher( array( 'foo', 'bar', 'baz' ) ),
-			new InMemoryBatchingFetcher( array( '0', '1' ) ),
-			new InMemoryBatchingFetcher( array() ),
-			new InMemoryBatchingFetcher( array( '2' ) )
+			new InMemoryBatchingFetcher( [ 'foo', 'bar', 'baz' ] ),
+			new InMemoryBatchingFetcher( [ '0', '1' ] ),
+			new InMemoryBatchingFetcher( [] ),
+			new InMemoryBatchingFetcher( [ '2' ] )
 		);
 
-		$this->assertEquals( array( 'foo', 'bar' ), $fetcher->fetchNext( 2 ) );
-		$this->assertEquals( array( 'baz' ), $fetcher->fetchNext( 2 ) );
-		$this->assertEquals( array( '0', '1' ), $fetcher->fetchNext( 3 ) );
-		$this->assertEquals( array( '2' ), $fetcher->fetchNext( 3 ) );
-		$this->assertEquals( array(), $fetcher->fetchNext( 3 ) );
+		$this->assertEquals( [ 'foo', 'bar' ], $fetcher->fetchNext( 2 ) );
+		$this->assertEquals( [ 'baz' ], $fetcher->fetchNext( 2 ) );
+		$this->assertEquals( [ '0', '1' ], $fetcher->fetchNext( 3 ) );
+		$this->assertEquals( [ '2' ], $fetcher->fetchNext( 3 ) );
+		$this->assertEquals( [], $fetcher->fetchNext( 3 ) );
 	}
 
 	public function testGivenMultipleFetchers_rewindWorksCorrectly() {
 		$fetcher = new MultipleBatchingFetcher(
-			new InMemoryBatchingFetcher( array( 'foo', 'bar', 'baz' ) ),
-			new InMemoryBatchingFetcher( array() ),
-			new InMemoryBatchingFetcher( array( '0', '1' ) ),
-			new InMemoryBatchingFetcher( array( '2' ) )
+			new InMemoryBatchingFetcher( [ 'foo', 'bar', 'baz' ] ),
+			new InMemoryBatchingFetcher( [] ),
+			new InMemoryBatchingFetcher( [ '0', '1' ] ),
+			new InMemoryBatchingFetcher( [ '2' ] )
 		);
 
 		$fetcher->fetchNext( 2 );
@@ -62,40 +63,40 @@ class MultipleBatchingFetcherTest extends \PHPUnit_Framework_TestCase {
 
 		$fetcher->rewind();
 
-		$this->assertEquals( array( 'foo' ), $fetcher->fetchNext( 1 ) );
+		$this->assertEquals( [ 'foo' ], $fetcher->fetchNext( 1 ) );
 	}
 
 	public function testCanConstructWithArray() {
-		new MultipleBatchingFetcher( array(
-			new InMemoryBatchingFetcher( array() ),
-			new InMemoryBatchingFetcher( array() )
-		) );
+		new MultipleBatchingFetcher( [
+			new InMemoryBatchingFetcher( [] ),
+			new InMemoryBatchingFetcher( [] )
+		] );
 
 		$this->assertTrue( true );
 	}
 
 	public function testGivenArrayAndFetchers_constructorThrowsException() {
-		$this->setExpectedException( 'InvalidArgumentException' );
+		$this->expectException( 'InvalidArgumentException' );
 
 		new MultipleBatchingFetcher(
-			array(
-				new InMemoryBatchingFetcher( array() ),
-				new InMemoryBatchingFetcher( array() )
-			),
-			new InMemoryBatchingFetcher( array() )
+			[
+				new InMemoryBatchingFetcher( [] ),
+				new InMemoryBatchingFetcher( [] )
+			],
+			new InMemoryBatchingFetcher( [] )
 		);
 	}
 
 	public function testGivenArrayWithNonFetcher_constructorThrowsException() {
-		$this->setExpectedException( 'InvalidArgumentException' );
+		$this->expectException( 'InvalidArgumentException' );
 
 		new MultipleBatchingFetcher(
-			array(
-				new InMemoryBatchingFetcher( array() ),
-				new InMemoryBatchingFetcher( array() ),
+			[
+				new InMemoryBatchingFetcher( [] ),
+				new InMemoryBatchingFetcher( [] ),
 				null,
-				new InMemoryBatchingFetcher( array() )
-			)
+				new InMemoryBatchingFetcher( [] )
+			]
 		);
 	}
 

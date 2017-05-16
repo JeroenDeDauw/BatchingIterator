@@ -35,7 +35,7 @@ class BatchingIterator implements \Iterator {
 	/**
 	 * @var mixed[]
 	 */
-	private $currentBatch = array();
+	private $currentBatch = [];
 
 	/**
 	 * @var int

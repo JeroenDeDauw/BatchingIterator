@@ -88,7 +88,7 @@ dependency on `jeroen/batching-iterator` to your project's `composer.json` file.
 Here is a minimal example of a `composer.json` file that just defines a dependency on
 BatchingIterator 2.0:
 
-```js
+```json
 {
     "require": {
         "jeroen/batching-iterator": "~2.0"

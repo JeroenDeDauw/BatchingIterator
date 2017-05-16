@@ -4,6 +4,7 @@ namespace Tests\BatchingIterator;
 
 use BatchingIterator\BatchingIterator;
 use BatchingIterator\Fetchers\InMemoryBatchingFetcher;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers BatchingIterator\BatchingIterator
@@ -11,25 +12,25 @@ use BatchingIterator\Fetchers\InMemoryBatchingFetcher;
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
-class BatchingIteratorTest extends \PHPUnit_Framework_TestCase {
+class BatchingIteratorTest extends TestCase {
 
 	public function testWhenFetcherReturnsEmptyRightAway_iteratorIsEmpty() {
-		$fetcher = $this->getMock( 'BatchingIterator\BatchingFetcher' );
+		$fetcher = $this->createMock( 'BatchingIterator\BatchingFetcher' );
 
 		$fetcher->expects( $this->once() )
 			->method( 'fetchNext' )
-			->will( $this->returnValue( array() ) );
+			->will( $this->returnValue( [] ) );
 
 		$iterator = new BatchingIterator( $fetcher );
 
-		$this->assertSame( array(), iterator_to_array( $iterator ) );
+		$this->assertSame( [], iterator_to_array( $iterator ) );
 	}
 
 	/**
 	 * @dataProvider batchSizeProvider
 	 */
 	public function testAllValuesEndUpInTheIterator( $batchSize ) {
-		$values = array( 'foo', 'bar', 'baz', 'bah' );
+		$values = [ 'foo', 'bar', 'baz', 'bah' ];
 
 		$fetcher = new InMemoryBatchingFetcher( $values );
 		$iterator = new BatchingIterator( $fetcher );
@@ -39,17 +40,17 @@ class BatchingIteratorTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function batchSizeProvider() {
-		return array(
-			array( 1 ),
-			array( 2 ),
-			array( 3 ),
-			array( 10 ),
-			array( 9001 ),
-		);
+		return [
+			[ 1 ],
+			[ 2 ],
+			[ 3 ],
+			[ 10 ],
+			[ 9001 ],
+		];
 	}
 
 	public function testCorrectCallsAreMadeToTheBatchingFetcher() {
-		$fetcher = $this->getMock( 'BatchingIterator\BatchingFetcher' );
+		$fetcher = $this->createMock( 'BatchingIterator\BatchingFetcher' );
 
 		$fetcher->expects( $this->at( 0 ) )
 			->method( 'rewind' );
@@ -57,47 +58,47 @@ class BatchingIteratorTest extends \PHPUnit_Framework_TestCase {
 		$fetcher->expects( $this->at( 1 ) )
 			->method( 'fetchNext' )
 			->with( $this->equalTo( 2 ) )
-			->will( $this->returnValue( array( 'foo', 'bar' ) ) );
+			->will( $this->returnValue( [ 'foo', 'bar' ] ) );
 
 		$fetcher->expects( $this->at( 2 ) )
 			->method( 'fetchNext' )
 			->with( $this->equalTo( 2 ) )
-			->will( $this->returnValue( array( 'baz' ) ) );
+			->will( $this->returnValue( [ 'baz' ] ) );
 
 		$fetcher->expects( $this->at( 3 ) )
 			->method( 'fetchNext' )
 			->with( $this->equalTo( 2 ) )
-			->will( $this->returnValue( array() ) );
+			->will( $this->returnValue( [] ) );
 
 		$iterator = new BatchingIterator( $fetcher );
 		$iterator->setMaxBatchSize( 2 );
 
-		$this->assertSame( array( 'foo', 'bar', 'baz' ), iterator_to_array( $iterator ) );
+		$this->assertSame( [ 'foo', 'bar', 'baz' ], iterator_to_array( $iterator ) );
 	}
 
 	/**
 	 * @dataProvider invalidBatchSizeProvider
 	 */
 	public function testSettingInvalidMaxBatchSizeCausesException( $invalidBatchSize ) {
-		$iterator = new BatchingIterator( $this->getMock( 'BatchingIterator\BatchingFetcher' ) );
+		$iterator = new BatchingIterator( $this->createMock( 'BatchingIterator\BatchingFetcher' ) );
 
-		$this->setExpectedException( 'InvalidArgumentException' );
+		$this->expectException( 'InvalidArgumentException' );
 		$iterator->setMaxBatchSize( $invalidBatchSize );
 	}
 
 	public function invalidBatchSizeProvider() {
-		return array(
-			array( 0 ),
-			array( -5 ),
-			array( 4.2 ),
-			array( '1' ),
-			array( null ),
-			array( array() ),
-		);
+		return [
+			[ 0 ],
+			[ -5 ],
+			[ 4.2 ],
+			[ '1' ],
+			[ null ],
+			[ [] ],
+		];
 	}
 
 	public function testWhenRewindingTheIterator_theFetcherIsAlsoRewinded() {
-		$fetcher = $this->getMock( 'BatchingIterator\BatchingFetcher' );
+		$fetcher = $this->createMock( 'BatchingIterator\BatchingFetcher' );
 
 		$fetcher->expects( $this->once() )
 			->method( 'rewind' );
@@ -108,7 +109,7 @@ class BatchingIteratorTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testMultipleIteration() {
-		$values = array( 'foo', 'bar', 'baz' );
+		$values = [ 'foo', 'bar', 'baz' ];
 
 		$iterator = new BatchingIterator( new InMemoryBatchingFetcher( $values ) );
 

@@ -66,7 +66,7 @@ class MultipleBatchingFetcher implements BatchingFetcher {
 	 */
 	public function fetchNext( $maxFetchCount ) {
 		if ( key( $this->fetchers ) === null ) {
-			return array();
+			return [];
 		}
 
 		/**
