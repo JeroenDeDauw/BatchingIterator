@@ -1,5 +1,7 @@
 <?php
 
+declare( strict_types = 1 );
+
 namespace BatchingIterator\Fetchers;
 
 use BatchingIterator\BatchingFetcher;
