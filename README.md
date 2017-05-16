@@ -44,7 +44,7 @@ results. You thus decoupled the service from who retrieves the results, and from
 They could be coming from values already in memory, wrapped in an `ArrayIterator`, or be pulled from
 a web service as iteration happens. Using an `ArrayIterator` is very helpful for testing.
 
-Implement the `BarchingFetcher` interface. If you already have a service to retrieve the data, this
+Implement the `BatchingFetcher` interface. If you already have a service to retrieve the data, this
 can be a simple wrapper.
 
 ```php
